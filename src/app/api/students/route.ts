@@ -88,7 +88,7 @@ const studentsData = [
 
 export async function GET(request: NextRequest) {
   try {
-    console.log('Fetching students from static data...')
+    console.log('Fetching students from static data - updated!')
     
     const { searchParams } = new URL(request.url)
     const group = searchParams.get('group')
