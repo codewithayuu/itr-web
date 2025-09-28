@@ -108,13 +108,6 @@ export function LatestUpdates() {
                                     <span>by {update.author}</span>
                                 </div>
 
-                                <Link
-                                    href={`/updates/${update.id}`}
-                                    className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-                                >
-                                    Read more
-                                    <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                                </Link>
                             </div>
                         </motion.article>
                     ))}
