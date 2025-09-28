@@ -3,7 +3,14 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Calendar, ArrowRight, Pin } from 'lucide-react'
-import { formatDate } from '@/lib/utils'
+// Simple date formatter
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
+}
 
 // IT-R Class Updates
 const mockUpdates = [
