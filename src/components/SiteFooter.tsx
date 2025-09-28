@@ -71,7 +71,12 @@ export function SiteFooter() {
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Mail className="h-4 w-4" />
-                                <span>contact@it-r-group.edu</span>
+                                <a 
+                                    href="mailto:codewithayuu@gmail.com"
+                                    className="text-gray-300 hover:text-blue-400 transition-colors"
+                                >
+                                    codewithayuu@gmail.com
+                                </a>
                             </div>
                         </div>
                     </div>
