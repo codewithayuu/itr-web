@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Users } from 'lucide-react'
+import { memo } from 'react'
 
 const getGroupColor = (group: string) => {
     switch (group) {
@@ -17,95 +18,44 @@ const getGroupColor = (group: string) => {
     }
 }
 
-// Static student data - exactly like timetable and faculty!
-const studentsData = [
+// Optimized student data - only first 6 students for featured section
+const featuredStudentsData = [
   { id: 1, name: "DISHITA", group: "R-1", bio: "Student in R-1 group." },
   { id: 2, name: "YASH GUPTA", group: "R-1", bio: "Student in R-1 group." },
   { id: 3, name: "AMRIT RAJ YADAV", group: "R-1", bio: "Student in R-1 group." },
-  { id: 4, name: "SAKSHAM SHREYANSH", group: "R-1", bio: "Student in R-1 group." },
-  { id: 5, name: "JAGRATT VARSHNEY", group: "R-1", bio: "Student in R-1 group." },
-  { id: 6, name: "AAGAM JAIN", group: "R-1", bio: "Student in R-1 group." },
-  { id: 7, name: "MAYANK JAIN", group: "R-1", bio: "Student in R-1 group." },
-  { id: 8, name: "RISHAB BANSAL", group: "R-1", bio: "Student in R-1 group." },
-  { id: 9, name: "VEER PRATAP SINGH", group: "R-1", bio: "Student in R-1 group." },
-  { id: 10, name: "VISHESH GARG", group: "R-1", bio: "Student in R-1 group." },
-  { id: 11, name: "BHARAT KUMAR", group: "R-1", bio: "Student in R-1 group." },
-  { id: 12, name: "VARUN SINGH RAWAT", group: "R-1", bio: "Student in R-1 group." },
-  { id: 13, name: "PRABHJOT SINGH", group: "R-1", bio: "Student in R-1 group." },
-  { id: 14, name: "YASH MITTAL", group: "R-1", bio: "Student in R-1 group." },
-  { id: 15, name: "SAMARTH CHAUDHARY", group: "R-1", bio: "Student in R-1 group." },
-  { id: 16, name: "SUBHRADITYA GHOSH", group: "R-1", bio: "Student in R-1 group." },
-  { id: 17, name: "KARTIK SHARMA", group: "R-1", bio: "Student in R-1 group." },
-  { id: 18, name: "VARDHMAAN JAIN", group: "R-1", bio: "Student in R-1 group." },
-  { id: 19, name: "AKRITI SHUKLA", group: "R-1", bio: "Student in R-1 group." },
-  { id: 20, name: "KARTIK TIWARI", group: "R-1", bio: "Student in R-1 group." },
-  { id: 21, name: "PRATYUSH SINGH", group: "R-1", bio: "Student in R-1 group." },
-  { id: 22, name: "AASTHA GARG", group: "R-1", bio: "Student in R-1 group." },
-  { id: 23, name: "PARTH DHAMI", group: "R-1", bio: "Student in R-1 group." },
-  { id: 24, name: "DHRUV GUPTA", group: "R-1", bio: "Student in R-1 group." },
-  { id: 25, name: "NAVYA GUPTA", group: "R-1", bio: "Student in R-1 group." },
-  { id: 26, name: "DIVISHA ARORA", group: "R-1", bio: "Student in R-1 group." },
-  { id: 27, name: "MANNAT WADHWA", group: "R-1", bio: "Student in R-1 group." },
   { id: 28, name: "ARYAN SINGHAL", group: "R-2", bio: "Student in R-2 group." },
-  { id: 29, name: "ROSHAN CHOUDHARY", group: "R-2", bio: "Student in R-2 group." },
-  { id: 30, name: "GARVIT", group: "R-2", bio: "Student in R-2 group." },
-  { id: 31, name: "AKSHAJ JAIN", group: "R-2", bio: "Student in R-2 group." },
-  { id: 32, name: "HARNIT GAUTAM", group: "R-2", bio: "Student in R-2 group." },
-  { id: 33, name: "SAKSHAM MANOCHA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 34, name: "PRAKHAR SRIVASTAVA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 35, name: "AGRIM SINGHAL", group: "R-2", bio: "Student in R-2 group." },
-  { id: 36, name: "NAMIT LAKHCHOWRA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 37, name: "RAGHAV SHARMA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 38, name: "KHUSHI GUPTA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 39, name: "ASIF MIRZA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 40, name: "PARTH GUPTA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 41, name: "AJITESH NIGAM", group: "R-2", bio: "Student in R-2 group." },
-  { id: 42, name: "TANMAY GARG", group: "R-2", bio: "Student in R-2 group." },
-  { id: 43, name: "AMAN POKHARIA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 44, name: "HEMANT KUMAR JHA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 45, name: "SAMBHAV JAIN", group: "R-2", bio: "Student in R-2 group." },
-  { id: 46, name: "ROHIN SAXENA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 47, name: "YASH SALHOTRA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 48, name: "SHUBHRA SINGH", group: "R-2", bio: "Student in R-2 group." },
-  { id: 49, name: "JAHANVI KUKREJA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 50, name: "HARSHITA JAIN", group: "R-2", bio: "Student in R-2 group." },
-  { id: 51, name: "DIYA MANN", group: "R-2", bio: "Student in R-2 group." },
-  { id: 52, name: "SHIVAM AGGARWAL", group: "R-2", bio: "Student in R-2 group." },
-  { id: 53, name: "RIDDHIKA SACHDEVA", group: "R-2", bio: "Student in R-2 group." },
-  { id: 54, name: "DEEPANSHU AGGARWAL", group: "R-2", bio: "Student in R-2 group." },
   { id: 55, name: "GARIMA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 56, name: "KRISHNA NEGI", group: "R-3", bio: "Student in R-3 group." },
-  { id: 57, name: "VANSHIKA JOSHI", group: "R-3", bio: "Student in R-3 group." },
-  { id: 58, name: "KAVYA SINGHAL", group: "R-3", bio: "Student in R-3 group." },
-  { id: 59, name: "AYUSH KUMAR JHA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 60, name: "ANUJAY DIXIT", group: "R-3", bio: "Student in R-3 group." },
-  { id: 61, name: "AMAN DWIVEDI", group: "R-3", bio: "Student in R-3 group." },
-  { id: 62, name: "MANAS KHANDELWAL", group: "R-3", bio: "Student in R-3 group." },
-  { id: 63, name: "SUHANI", group: "R-3", bio: "Student in R-3 group." },
-  { id: 64, name: "ASHISH SINGH", group: "R-3", bio: "Student in R-3 group." },
-  { id: 65, name: "PRALABH PUSHKER", group: "R-3", bio: "Student in R-3 group." },
-  { id: 66, name: "RAGHAV", group: "R-3", bio: "Student in R-3 group." },
-  { id: 67, name: "AYUSH JINDAL", group: "R-3", bio: "Student in R-3 group." },
-  { id: 68, name: "RHYTHM ARORA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 69, name: "MANVENDRA SINGH RATHORE", group: "R-3", bio: "Student in R-3 group." },
-  { id: 70, name: "ADIT GUPTA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 71, name: "RITISHA BISHT", group: "R-3", bio: "Student in R-3 group." },
-  { id: 72, name: "AVNA BATRA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 73, name: "SAURISH SETH", group: "R-3", bio: "Student in R-3 group." },
-  { id: 74, name: "HARSH SHARMA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 75, name: "AMITESH RANJAN", group: "R-3", bio: "Student in R-3 group." },
-  { id: 76, name: "KRISH CHOPRA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 77, name: "ARADHYA SHARMA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 78, name: "SEERAT TALWAR", group: "R-3", bio: "Student in R-3 group." },
-  { id: 79, name: "NAMAN GUPTA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 80, name: "AARAV GUPTA", group: "R-3", bio: "Student in R-3 group." },
-  { id: 81, name: "RAGINI AGGARWAL", group: "R-3", bio: "Student in R-3 group." },
-  { id: 82, name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group." }
+  { id: 56, name: "KRISHNA NEGI", group: "R-3", bio: "Student in R-3 group." }
 ]
 
-export function FeaturedStudents() {
-    // Show first 6 students - no API calls needed!
-    const students = studentsData.slice(0, 6)
+// Memoized student card component
+const StudentCard = memo(({ student, index }: { student: any, index: number }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
+    >
+        <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                {student.name.charAt(0)}
+            </div>
+            <div>
+                <h3 className="text-white font-semibold text-lg">{student.name}</h3>
+                <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getGroupColor(student.group)}`}>
+                    {student.group}
+                </span>
+            </div>
+        </div>
+        <p className="text-gray-400 text-sm">{student.bio}</p>
+    </motion.div>
+))
+
+StudentCard.displayName = 'StudentCard'
+
+export const FeaturedStudents = memo(() => {
+    // Use optimized data directly
+    const students = featuredStudentsData
 
     return (
         <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -140,26 +90,7 @@ export function FeaturedStudents() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     {students.map((student, index) => (
-                        <motion.div
-                            key={student.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
-                        >
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                    {student.name.charAt(0)}
-                                </div>
-                                <div>
-                                    <h3 className="text-white font-semibold text-lg">{student.name}</h3>
-                                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getGroupColor(student.group)}`}>
-                                        {student.group}
-                                    </span>
-                                </div>
-                            </div>
-                            <p className="text-gray-400 text-sm">{student.bio}</p>
-                        </motion.div>
+                        <StudentCard key={student.id} student={student} index={index} />
                     ))}
                 </div>
 
@@ -180,4 +111,6 @@ export function FeaturedStudents() {
             </div>
         </section>
     )
-}
+})
+
+FeaturedStudents.displayName = 'FeaturedStudents'

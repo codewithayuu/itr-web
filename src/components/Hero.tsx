@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Users, Newspaper, Calendar, GraduationCap, BookOpen } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 
 const features = [
     {
@@ -123,7 +123,56 @@ const quotesAndJokes = [
     }
 ]
 
-export function Hero() {
+// Memoized feature card component
+const FeatureCard = memo(({ feature, index }: { feature: any, index: number }) => {
+    const Icon = feature.icon
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+            whileHover={{ y: -5, scale: 1.02 }}
+            className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-8 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
+        >
+            <div className="flex flex-col items-center text-center space-y-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30">
+                    <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                        {feature.name}
+                    </h3>
+                    <p className="text-sm text-gray-300">
+                        {feature.description}
+                    </p>
+                </div>
+                {feature.external ? (
+                    <a
+                        href={feature.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                        Access Material
+                        <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                    </a>
+                ) : (
+                    <Link
+                        href={feature.href}
+                        className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                        Learn more
+                        <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                )}
+            </div>
+        </motion.div>
+    )
+})
+
+FeatureCard.displayName = 'FeatureCard'
+
+export const Hero = memo(() => {
     const [randomQuote, setRandomQuote] = useState(quotesAndJokes[0])
 
     useEffect(() => {
@@ -199,55 +248,14 @@ export function Hero() {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl mx-auto"
                     >
-                        {features.map((feature, index) => {
-                            const Icon = feature.icon
-                            return (
-                                <motion.div
-                                    key={feature.name}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                                    whileHover={{ y: -5, scale: 1.02 }}
-                                    className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-8 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
-                                >
-                                    <div className="flex flex-col items-center text-center space-y-4">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30">
-                                            <Icon className="h-6 w-6" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-lg font-semibold text-white mb-2">
-                                                {feature.name}
-                                            </h3>
-                                            <p className="text-sm text-gray-300">
-                                                {feature.description}
-                                            </p>
-                                        </div>
-                                        {feature.external ? (
-                                            <a
-                                                href={feature.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-                                            >
-                                                Access Material
-                                                <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                                            </a>
-                                        ) : (
-                                            <Link
-                                                href={feature.href}
-                                                className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-                                            >
-                                                Learn more
-                                                <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                                            </Link>
-                                        )}
-                                    </div>
-                                </motion.div>
-                            )
-                        })}
+                        {features.map((feature, index) => (
+                            <FeatureCard key={feature.name} feature={feature} index={index} />
+                        ))}
                     </motion.div>
                 </div>
             </div>
         </section>
     )
-}
+})
+
+Hero.displayName = 'Hero'

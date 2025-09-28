@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Calendar, ArrowRight, Pin } from 'lucide-react'
+import { memo } from 'react'
 // Simple date formatter
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('en-US', {
@@ -48,7 +49,46 @@ const mockUpdates = [
     },
 ]
 
-export function LatestUpdates() {
+// Memoized update card component
+const UpdateCard = memo(({ update, index }: { update: any, index: number }) => (
+    <motion.article
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        viewport={{ once: true }}
+        whileHover={{ y: -5, scale: 1.02 }}
+        className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-6 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
+    >
+        {update.pinned && (
+            <div className="absolute top-4 right-4">
+                <Pin className="h-4 w-4 text-blue-400" />
+            </div>
+        )}
+
+        <div className="space-y-4">
+            <div>
+                <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors mb-2">
+                    {update.title}
+                </h3>
+                <p className="text-sm text-gray-300 line-clamp-3">
+                    {update.content}
+                </p>
+            </div>
+
+            <div className="flex items-center justify-between text-xs text-gray-400">
+                <div className="flex items-center space-x-1">
+                    <Calendar className="h-3 w-3" />
+                    <span>{formatDate(update.createdAt)}</span>
+                </div>
+                <span>by {update.author}</span>
+            </div>
+        </div>
+    </motion.article>
+))
+
+UpdateCard.displayName = 'UpdateCard'
+
+export const LatestUpdates = memo(() => {
   return (
     <section className="section-padding relative z-20">
       <div className="container-custom">
@@ -75,41 +115,7 @@ export function LatestUpdates() {
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {mockUpdates.map((update, index) => (
-                        <motion.article
-                            key={update.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -5, scale: 1.02 }}
-                            className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-6 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
-                        >
-                            {update.pinned && (
-                                <div className="absolute top-4 right-4">
-                                    <Pin className="h-4 w-4 text-blue-400" />
-                                </div>
-                            )}
-
-                            <div className="space-y-4">
-                                <div>
-                                    <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors mb-2">
-                                        {update.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-300 line-clamp-3">
-                                        {update.content}
-                                    </p>
-                                </div>
-
-                                <div className="flex items-center justify-between text-xs text-gray-400">
-                                    <div className="flex items-center space-x-1">
-                                        <Calendar className="h-3 w-3" />
-                                        <span>{formatDate(update.createdAt)}</span>
-                                    </div>
-                                    <span>by {update.author}</span>
-                                </div>
-
-                            </div>
-                        </motion.article>
+                        <UpdateCard key={update.id} update={update} index={index} />
                     ))}
                 </div>
 
@@ -131,4 +137,6 @@ export function LatestUpdates() {
             </div>
         </section>
     )
-}
+})
+
+LatestUpdates.displayName = 'LatestUpdates'

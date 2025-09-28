@@ -26,13 +26,24 @@ export function InteractiveStars() {
   const [stars, setStars] = useState<Star[]>([])
   const [shootingStars, setShootingStars] = useState<ShootingStar[]>([])
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isMobile, setIsMobile] = useState(false)
   const animationRef = useRef<number | undefined>(undefined)
 
-  // Generate initial stars
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Generate initial stars - reduced count for mobile
   useEffect(() => {
     const generateStars = () => {
       const newStars: Star[] = []
-      const starCount = 150
+      const starCount = isMobile ? 50 : 100 // Reduced from 150
 
       for (let i = 0; i < starCount; i++) {
         newStars.push({
@@ -49,10 +60,12 @@ export function InteractiveStars() {
     }
 
     generateStars()
-  }, [])
+  }, [isMobile])
 
-  // Mouse tracking
+  // Mouse tracking - disabled on mobile for performance
   useEffect(() => {
+    if (isMobile) return
+
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect()
@@ -65,10 +78,12 @@ export function InteractiveStars() {
 
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+  }, [isMobile])
 
-  // Shooting stars generation
+  // Shooting stars generation - reduced frequency on mobile
   useEffect(() => {
+    if (isMobile) return // Disable shooting stars on mobile
+
     const generateShootingStar = () => {
       const newShootingStar: ShootingStar = {
         id: Date.now(),
@@ -81,14 +96,16 @@ export function InteractiveStars() {
       setShootingStars(prev => [...prev, newShootingStar])
     }
 
-    const interval = setInterval(generateShootingStar, 3000)
+    const interval = setInterval(generateShootingStar, 5000) // Reduced frequency
     return () => clearInterval(interval)
-  }, [])
+  }, [isMobile])
 
-  // Animation loop
+  // Animation loop - optimized for mobile
   useEffect(() => {
+    if (isMobile) return // Disable complex animations on mobile
+
     const animate = () => {
-      // Update stars with mouse interaction
+      // Update stars with mouse interaction (desktop only)
       setStars(prevStars => 
         prevStars.map(star => {
           const distanceToMouse = Math.sqrt(
@@ -130,37 +147,45 @@ export function InteractiveStars() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [mousePosition])
+  }, [mousePosition, isMobile])
 
   return (
     <div ref={containerRef} className="interactive-stars" style={{ pointerEvents: 'none' }}>
-      {/* Parallax layers */}
-      <div className="parallax-layer parallax-layer-1" />
-      <div className="parallax-layer parallax-layer-2" />
-      <div className="parallax-layer parallax-layer-3" />
+      {/* Parallax layers - reduced on mobile */}
+      {!isMobile && (
+        <>
+          <div className="parallax-layer parallax-layer-1" />
+          <div className="parallax-layer parallax-layer-2" />
+          <div className="parallax-layer parallax-layer-3" />
+        </>
+      )}
       
-      {/* Nebula effects */}
-      <div className="nebula purple" style={{ 
-        top: '10%', 
-        left: '20%', 
-        width: '300px', 
-        height: '300px',
-        animation: 'nebula-pulse 12s ease-in-out infinite'
-      }} />
-      <div className="nebula blue" style={{ 
-        top: '60%', 
-        right: '10%', 
-        width: '250px', 
-        height: '250px',
-        animation: 'nebula-pulse 15s ease-in-out infinite 3s'
-      }} />
-      <div className="nebula pink" style={{ 
-        bottom: '20%', 
-        left: '60%', 
-        width: '200px', 
-        height: '200px',
-        animation: 'nebula-pulse 18s ease-in-out infinite 6s'
-      }} />
+      {/* Nebula effects - disabled on mobile */}
+      {!isMobile && (
+        <>
+          <div className="nebula purple" style={{ 
+            top: '10%', 
+            left: '20%', 
+            width: '300px', 
+            height: '300px',
+            animation: 'nebula-pulse 12s ease-in-out infinite'
+          }} />
+          <div className="nebula blue" style={{ 
+            top: '60%', 
+            right: '10%', 
+            width: '250px', 
+            height: '250px',
+            animation: 'nebula-pulse 15s ease-in-out infinite 3s'
+          }} />
+          <div className="nebula pink" style={{ 
+            bottom: '20%', 
+            left: '60%', 
+            width: '200px', 
+            height: '200px',
+            animation: 'nebula-pulse 18s ease-in-out infinite 6s'
+          }} />
+        </>
+      )}
       
       {/* Interactive stars */}
       {stars.map(star => (
@@ -171,14 +196,14 @@ export function InteractiveStars() {
             left: `${star.x}%`,
             top: `${star.y}%`,
             opacity: star.opacity,
-            animation: 'twinkle 3s ease-in-out infinite',
-            animationDelay: `${star.id * 0.1}s`,
+            animation: isMobile ? 'none' : `twinkle 3s ease-in-out infinite`,
+            animationDelay: isMobile ? '0s' : `${star.id * 0.1}s`,
           }}
         />
       ))}
       
-      {/* Shooting stars */}
-      {shootingStars.map(star => (
+      {/* Shooting stars - desktop only */}
+      {!isMobile && shootingStars.map(star => (
         <div
           key={star.id}
           className="shooting-star"
