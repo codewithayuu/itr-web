@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Users, Newspaper, Calendar, GraduationCap, BookOpen } from 'lucide-react'
+import { ArrowRight, Users, Newspaper, Calendar, GraduationCap, BookOpen, LucideIcon } from 'lucide-react'
 import { useState, useEffect, memo } from 'react'
 
 const features = [
@@ -124,7 +124,7 @@ const quotesAndJokes = [
 ]
 
 // Memoized feature card component
-const FeatureCard = memo(({ feature, index }: { feature: any, index: number }) => {
+const FeatureCard = memo(({ feature, index }: { feature: { name: string; description: string; icon: LucideIcon; href: string; external?: boolean }, index: number }) => {
     const Icon = feature.icon
     return (
         <motion.div

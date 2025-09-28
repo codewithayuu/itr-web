@@ -50,7 +50,7 @@ const mockUpdates = [
 ]
 
 // Memoized update card component
-const UpdateCard = memo(({ update, index }: { update: any, index: number }) => (
+const UpdateCard = memo(({ update, index }: { update: { id: number; title: string; content: string; author: string; createdAt: Date; pinned: boolean }, index: number }) => (
     <motion.article
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -29,7 +29,7 @@ const featuredStudentsData = [
 ]
 
 // Memoized student card component
-const StudentCard = memo(({ student, index }: { student: any, index: number }) => (
+const StudentCard = memo(({ student, index }: { student: { id: number; name: string; group: string; bio: string }, index: number }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
