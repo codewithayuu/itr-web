@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# database
+prisma/dev.db
+prisma/*.db
+
+# deployment documentation
+DEPLOYMENT_READY.md
+DEPLOYMENT_STATUS.md
+VERCEL_DEPLOYMENT.md

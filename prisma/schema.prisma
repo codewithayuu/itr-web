@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String?
+  avatarUrl String?  // stored in object storage
+  email     String?  // optional contact info
+  bio       String?  // optional bio
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Update {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String   // markdown or plain text
+  imageUrl  String?  // optional hero image
+  pinned    Boolean  @default(false)
+  author    String?  // who posted this
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GalleryImage {
+  id        Int      @id @default(autoincrement())
+  filename  String
+  url       String
+  uploader  String?
+  caption   String?  // optional caption
+  createdAt DateTime @default(now())
+}
+
+model Student {
+  id        Int      @id @default(autoincrement())
+  name      String
+  group     String
+  bio       String?  // optional bio
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+
+
