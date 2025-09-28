@@ -49,10 +49,15 @@ export function SiteFooter() {
                     {/* Contact */}
                     <div className="space-y-4">
                         <h3 className="text-sm font-semibold text-white">Contact</h3>
-                        <div className="space-y-2 text-sm text-gray-300">
-                            <div className="flex items-center space-x-2">
-                                <MapPin className="h-4 w-4" />
-                                <span>Information Technology Department</span>
+                        <div className="space-y-3 text-sm text-gray-300">
+                            <div className="flex items-start space-x-2">
+                                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                                <div>
+                                    <div className="font-medium text-white">MAIT</div>
+                                    <div className="text-xs">Maharaja Agrasen Institute of Technology</div>
+                                    <div className="text-xs">PSP Area, Plot No-1, Sector-22</div>
+                                    <div className="text-xs">Rohini, Delhi-110086</div>
+                                </div>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Mail className="h-4 w-4" />
@@ -69,7 +74,7 @@ export function SiteFooter() {
                         </p>
                         <div className="flex items-center space-x-4">
                             <Link
-                                href="https://github.com/it-r-group"
+                                href="https://github.com/codewithayuu/itr-web"
                                 className="text-gray-400 hover:text-white transition-colors"
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -78,6 +83,11 @@ export function SiteFooter() {
                                 <span className="sr-only">GitHub</span>
                             </Link>
                         </div>
+                    </div>
+                    <div className="mt-4 text-center">
+                        <p className="text-sm text-gray-500">
+                            Made with ❤️ by <span className="text-gray-400">iambatman</span>
+                        </p>
                     </div>
                 </div>
             </div>
