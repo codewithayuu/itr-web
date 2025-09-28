@@ -3,6 +3,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "DATABASE_URL": "@database_url"
+    "STORAGE_URL": "@storage_url"
   }
 }
