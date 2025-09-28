@@ -1,6 +1,6 @@
 # IT-R Website
 
-Official website for IT-R (Information Technology) branch at MAIT.
+Our Community website for IT-R (Information Technology) branch at MAIT.
 
 ## Features
 
@@ -20,11 +20,6 @@ Official website for IT-R (Information Technology) branch at MAIT.
 ## Live Website
 
 Visit: [itr-web.vercel.app](https://itr-web.vercel.app)
-
-## Contact
-
-**MAIT** - Maharaja Agrasen Institute of Technology  
-PSP Area, Plot No-1, Sector-22, Rohini, Delhi-110086
 
 ---
 
