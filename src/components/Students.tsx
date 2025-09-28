@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Search, Users, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { ArrowRight, Users } from 'lucide-react'
 
 const getGroupColor = (group: string) => {
     switch (group) {
@@ -103,55 +104,118 @@ const studentsData = [
   { id: 82, name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group." }
 ]
 
-export function FeaturedStudents() {
-    // Show first 6 students - no API calls needed!
-    const students = studentsData.slice(0, 6)
+export function Students() {
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedGroup, setSelectedGroup] = useState('All')
+
+    const filteredStudents = studentsData
+        .filter(student => {
+            const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase())
+            const matchesGroup = selectedGroup === 'All' || student.group === selectedGroup
+            return matchesSearch && matchesGroup
+        })
+
+    const groups = ['All', 'R-1', 'R-2', 'R-3']
 
     return (
-        <section className="py-16 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 bg-blue-600/10 text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-4"
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+            <div className="container mx-auto px-4 py-8">
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="mb-8"
+                >
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors mb-4"
                     >
-                        <Users className="w-4 h-4" />
-                        Our Students
-                    </motion.div>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-3xl sm:text-4xl font-bold text-white mb-4"
-                    >
-                        Meet Our Amazing Students
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-gray-400 text-lg max-w-2xl mx-auto"
-                    >
-                        Discover the talented individuals who make up our IT-R community
-                    </motion.p>
-                </div>
+                        <ArrowLeft className="w-4 h-4" />
+                        Back to Home
+                    </Link>
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-3 bg-blue-600/20 rounded-lg">
+                            <Users className="w-6 h-6 text-blue-400" />
+                        </div>
+                        <div>
+                            <h1 className="text-3xl font-bold text-white">Our Students</h1>
+                            <p className="text-gray-400">Meet the talented members of our IT-R community</p>
+                        </div>
+                    </div>
+                </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    {students.map((student, index) => (
+                {/* Filters */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 mb-8"
+                >
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        {/* Search */}
+                        <div className="flex-1">
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                                <input
+                                    type="text"
+                                    placeholder="Search students..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Group Filter */}
+                        <div className="sm:w-48">
+                            <select
+                                value={selectedGroup}
+                                onChange={(e) => setSelectedGroup(e.target.value)}
+                                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                {groups.map(group => (
+                                    <option key={group} value={group} className="bg-gray-800">
+                                        {group === 'All' ? 'All Groups' : group}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Results Count */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="mb-6"
+                >
+                    <p className="text-gray-400">
+                        Showing {filteredStudents.length} of {studentsData.length} students
+                    </p>
+                </motion.div>
+
+                {/* Students Grid */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                >
+                    {filteredStudents.map((student, index) => (
                         <motion.div
                             key={student.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
+                            transition={{ duration: 0.6, delay: index * 0.05 }}
                             className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
                         >
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
                                     {student.name.charAt(0)}
                                 </div>
-                                <div>
+                                <div className="flex-1">
                                     <h3 className="text-white font-semibold text-lg">{student.name}</h3>
                                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getGroupColor(student.group)}`}>
                                         {student.group}
@@ -161,23 +225,22 @@ export function FeaturedStudents() {
                             <p className="text-gray-400 text-sm">{student.bio}</p>
                         </motion.div>
                     ))}
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    className="text-center"
-                >
-                    <Link
-                        href="/students"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-                    >
-                        View All Students
-                        <ArrowRight className="w-4 h-4" />
-                    </Link>
                 </motion.div>
+
+                {/* No Results */}
+                {filteredStudents.length === 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        className="text-center py-12"
+                    >
+                        <Users className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                        <h3 className="text-xl font-semibold text-gray-400 mb-2">No students found</h3>
+                        <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+                    </motion.div>
+                )}
             </div>
-        </section>
+        </div>
     )
 }
