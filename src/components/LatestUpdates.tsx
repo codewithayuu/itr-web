@@ -60,14 +60,14 @@ const UpdateCard = memo(({ update, index }: { update: { id: number; title: strin
         className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-6 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
     >
         {update.pinned && (
-            <div className="absolute top-4 right-4">
-                <Pin className="h-4 w-4 text-blue-400" />
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                <Pin className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
             </div>
         )}
 
         <div className="space-y-4">
             <div>
-                <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors mb-2">
+                <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors mb-2 pr-8 sm:pr-0">
                     {update.title}
                 </h3>
                 <p className="text-sm text-gray-300 line-clamp-3">
