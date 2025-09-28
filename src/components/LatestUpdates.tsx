@@ -16,14 +16,22 @@ const formatDate = (date: Date) => {
 const mockUpdates = [
     {
         id: 1,
-        title: 'IT-R Class Website Launched!',
-        content: 'Welcome to the official IT-R class website. Here you can find your timetable, faculty information, and stay updated with class announcements.',
-        author: 'IT-R Admin',
+        title: 'Best of Luck for Mid-Semester Exams! 🎓',
+        content: 'Dear IT-R students, as your mid-semester examinations approach, we want to wish you all the very best! Remember to stay focused, manage your time well, and believe in your preparation. You\'ve got this! Good luck to everyone!',
+        author: 'IT-R Faculty',
         createdAt: new Date(),
         pinned: true,
     },
     {
         id: 2,
+        title: 'IT-R Class Website Launched!',
+        content: 'Welcome to the official IT-R class website. Here you can find your timetable, faculty information, and stay updated with class announcements.',
+        author: 'IT-R Admin',
+        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+        pinned: false,
+    },
+    {
+        id: 3,
         title: 'Class Timetable Available',
         content: 'Your weekly class schedule is now available on the website. Check the Timetable section for your daily classes and room assignments.',
         author: 'IT-R Admin',
@@ -31,7 +39,7 @@ const mockUpdates = [
         pinned: false,
     },
     {
-        id: 3,
+        id: 4,
         title: 'Faculty Information Updated',
         content: 'Complete faculty information including subjects and room numbers has been updated. Visit the Faculty section to know your teachers better.',
         author: 'IT-R Admin',
