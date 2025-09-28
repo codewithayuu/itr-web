@@ -154,37 +154,6 @@ export function Faculty() {
           </div>
         </motion.div>
 
-        {/* Study Material Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
-        >
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-8">
-            <div className="flex items-center justify-center mb-4">
-              <BookOpen className="h-8 w-8 text-blue-400 mr-3" />
-              <h3 className="text-2xl font-bold text-white">Study Material & Notes</h3>
-            </div>
-            <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-              Access comprehensive study materials, class notes, and resources to enhance your learning experience.
-            </p>
-            <a
-              href="https://amrit-11022007.github.io/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              <BookOpen className="h-5 w-5 mr-2" />
-              Access Study Material
-              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-        </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

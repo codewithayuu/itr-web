@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, Users, Newspaper, Calendar, GraduationCap } from 'lucide-react'
+import { ArrowRight, Users, Newspaper, Calendar, GraduationCap, BookOpen } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 const features = [
@@ -29,6 +29,13 @@ const features = [
         description: 'Meet the dedicated educators and mentors',
         icon: GraduationCap,
         href: '/faculty',
+    },
+    {
+        name: 'Study Material',
+        description: 'Access comprehensive study materials and class notes',
+        icon: BookOpen,
+        href: 'https://amrit-11022007.github.io/',
+        external: true,
     },
 ]
 
@@ -190,7 +197,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+                        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
                     >
                         {features.map((feature, index) => {
                             const Icon = feature.icon
@@ -215,13 +222,25 @@ export function Hero() {
                                                 {feature.description}
                                             </p>
                                         </div>
-                                        <Link
-                                            href={feature.href}
-                                            className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-                                        >
-                                            Learn more
-                                            <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                                        </Link>
+                                        {feature.external ? (
+                                            <a
+                                                href={feature.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                                            >
+                                                Access Material
+                                                <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                href={feature.href}
+                                                className="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                                            >
+                                                Learn more
+                                                <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                                            </Link>
+                                        )}
                                     </div>
                                 </motion.div>
                             )
