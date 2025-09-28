@@ -118,8 +118,7 @@ export function Students() {
     const groups = ['All', 'R-1', 'R-2', 'R-3']
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-            <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
@@ -240,7 +239,6 @@ export function Students() {
                         <p className="text-gray-500">Try adjusting your search or filter criteria</p>
                     </motion.div>
                 )}
-            </div>
         </div>
     )
 }
