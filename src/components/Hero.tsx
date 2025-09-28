@@ -197,7 +197,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+                        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 max-w-7xl mx-auto"
                     >
                         {features.map((feature, index) => {
                             const Icon = feature.icon
@@ -208,7 +208,7 @@ export function Hero() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
                                     whileHover={{ y: -5, scale: 1.02 }}
-                                    className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-6 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
+                                    className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-8 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
                                 >
                                     <div className="flex flex-col items-center text-center space-y-4">
                                         <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30">

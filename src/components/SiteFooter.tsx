@@ -3,8 +3,8 @@ import { Github, Mail, MapPin } from 'lucide-react'
 
 export function SiteFooter() {
     return (
-        <footer className="border-t border-gray-700/50 bg-gray-800/30 backdrop-blur-sm">
-            <div className="container-custom py-8">
+        <footer className="border-t border-gray-700/50 bg-gray-800/30 backdrop-blur-sm mt-16">
+            <div className="container-custom py-12">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                     {/* Brand */}
                     <div className="space-y-4">
