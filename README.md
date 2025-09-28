@@ -17,6 +17,15 @@ Our Community website for IT-R (Information Technology) branch at MAIT.
 - **Styling**: Tailwind CSS
 - **Deployment**: Vercel
 
+## Mobile Performance Optimizations
+
+This website has been optimized for mobile devices with:
+- Reduced animations on mobile (50 stars vs 150 on desktop)
+- Lazy loading components for faster initial load
+- React.memo optimizations for better performance
+- Mobile-specific CSS optimizations
+- Conditional rendering based on device type
+
 ## Live Website
 
 Visit: [itr-web.vercel.app](https://itr-web.vercel.app)
