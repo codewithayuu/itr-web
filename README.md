@@ -1,4 +1,4 @@
-# IT-R Group Website
+# IT-R Website
 
 A modern, responsive website for the IT-R group built with Next.js, TypeScript, and Tailwind CSS.
 
