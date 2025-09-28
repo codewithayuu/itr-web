@@ -3,6 +3,31 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if database is empty and set it up
+    const studentCount = await prisma.student.count()
+    
+    if (studentCount === 0) {
+      console.log('Database is empty, setting up...')
+      
+      // Import and run the setup
+      const setupResponse = await fetch(`${request.nextUrl.origin}/api/setup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      
+      if (!setupResponse.ok) {
+        console.error('Failed to setup database')
+        return NextResponse.json(
+          { error: 'Database setup failed' },
+          { status: 500 }
+        )
+      }
+      
+      console.log('Database setup completed')
+    }
+
     const { searchParams } = new URL(request.url)
     const group = searchParams.get('group')
     const search = searchParams.get('search')
