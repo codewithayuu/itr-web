@@ -48,3 +48,5 @@ prisma/*.db
 DEPLOYMENT_READY.md
 DEPLOYMENT_STATUS.md
 VERCEL_DEPLOYMENT.md
+
+.vercel
