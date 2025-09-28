@@ -17,8 +17,8 @@ const mockUpdates = [
     {
         id: 1,
         title: 'Best of Luck for Mid-Semester Exams! 🎓',
-        content: 'Dear IT-R students, as your mid-semester examinations approach, we want to wish you all the very best! Remember to stay focused, manage your time well, and believe in your preparation. You\'ve got this! Good luck to everyone!',
-        author: 'IT-R Faculty',
+        content: 'Phod ke aana hai exam',
+        author: 'iambatman',
         createdAt: new Date(),
         pinned: true,
     },
