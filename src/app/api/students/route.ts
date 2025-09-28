@@ -1,152 +1,117 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+
+// Static student data - no database needed!
+const studentsData = [
+  { id: 1, name: "DISHITA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 2, name: "YASH GUPTA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 3, name: "AMRIT RAJ YADAV", group: "R-1", bio: "Student in R-1 group." },
+  { id: 4, name: "SAKSHAM SHREYANSH", group: "R-1", bio: "Student in R-1 group." },
+  { id: 5, name: "JAGRATT VARSHNEY", group: "R-1", bio: "Student in R-1 group." },
+  { id: 6, name: "AAGAM JAIN", group: "R-1", bio: "Student in R-1 group." },
+  { id: 7, name: "MAYANK JAIN", group: "R-1", bio: "Student in R-1 group." },
+  { id: 8, name: "RISHAB BANSAL", group: "R-1", bio: "Student in R-1 group." },
+  { id: 9, name: "VEER PRATAP SINGH", group: "R-1", bio: "Student in R-1 group." },
+  { id: 10, name: "VISHESH GARG", group: "R-1", bio: "Student in R-1 group." },
+  { id: 11, name: "BHARAT KUMAR", group: "R-1", bio: "Student in R-1 group." },
+  { id: 12, name: "VARUN SINGH RAWAT", group: "R-1", bio: "Student in R-1 group." },
+  { id: 13, name: "PRABHJOT SINGH", group: "R-1", bio: "Student in R-1 group." },
+  { id: 14, name: "YASH MITTAL", group: "R-1", bio: "Student in R-1 group." },
+  { id: 15, name: "SAMARTH CHAUDHARY", group: "R-1", bio: "Student in R-1 group." },
+  { id: 16, name: "SUBHRADITYA GHOSH", group: "R-1", bio: "Student in R-1 group." },
+  { id: 17, name: "KARTIK SHARMA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 18, name: "VARDHMAAN JAIN", group: "R-1", bio: "Student in R-1 group." },
+  { id: 19, name: "AKRITI SHUKLA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 20, name: "KARTIK TIWARI", group: "R-1", bio: "Student in R-1 group." },
+  { id: 21, name: "PRATYUSH SINGH", group: "R-1", bio: "Student in R-1 group." },
+  { id: 22, name: "AASTHA GARG", group: "R-1", bio: "Student in R-1 group." },
+  { id: 23, name: "PARTH DHAMI", group: "R-1", bio: "Student in R-1 group." },
+  { id: 24, name: "DHRUV GUPTA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 25, name: "NAVYA GUPTA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 26, name: "DIVISHA ARORA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 27, name: "MANNAT WADHWA", group: "R-1", bio: "Student in R-1 group." },
+  { id: 28, name: "ARYAN SINGHAL", group: "R-2", bio: "Student in R-2 group." },
+  { id: 29, name: "ROSHAN CHOUDHARY", group: "R-2", bio: "Student in R-2 group." },
+  { id: 30, name: "GARVIT", group: "R-2", bio: "Student in R-2 group." },
+  { id: 31, name: "AKSHAJ JAIN", group: "R-2", bio: "Student in R-2 group." },
+  { id: 32, name: "HARNIT GAUTAM", group: "R-2", bio: "Student in R-2 group." },
+  { id: 33, name: "SAKSHAM MANOCHA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 34, name: "PRAKHAR SRIVASTAVA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 35, name: "AGRIM SINGHAL", group: "R-2", bio: "Student in R-2 group." },
+  { id: 36, name: "NAMIT LAKHCHOWRA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 37, name: "RAGHAV SHARMA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 38, name: "KHUSHI GUPTA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 39, name: "ASIF MIRZA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 40, name: "PARTH GUPTA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 41, name: "AJITESH NIGAM", group: "R-2", bio: "Student in R-2 group." },
+  { id: 42, name: "TANMAY GARG", group: "R-2", bio: "Student in R-2 group." },
+  { id: 43, name: "AMAN POKHARIA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 44, name: "HEMANT KUMAR JHA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 45, name: "SAMBHAV JAIN", group: "R-2", bio: "Student in R-2 group." },
+  { id: 46, name: "ROHIN SAXENA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 47, name: "YASH SALHOTRA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 48, name: "SHUBHRA SINGH", group: "R-2", bio: "Student in R-2 group." },
+  { id: 49, name: "JAHANVI KUKREJA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 50, name: "HARSHITA JAIN", group: "R-2", bio: "Student in R-2 group." },
+  { id: 51, name: "DIYA MANN", group: "R-2", bio: "Student in R-2 group." },
+  { id: 52, name: "SHIVAM AGGARWAL", group: "R-2", bio: "Student in R-2 group." },
+  { id: 53, name: "RIDDHIKA SACHDEVA", group: "R-2", bio: "Student in R-2 group." },
+  { id: 54, name: "DEEPANSHU AGGARWAL", group: "R-2", bio: "Student in R-2 group." },
+  { id: 55, name: "GARIMA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 56, name: "KRISHNA NEGI", group: "R-3", bio: "Student in R-3 group." },
+  { id: 57, name: "VANSHIKA JOSHI", group: "R-3", bio: "Student in R-3 group." },
+  { id: 58, name: "KAVYA SINGHAL", group: "R-3", bio: "Student in R-3 group." },
+  { id: 59, name: "AYUSH KUMAR JHA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 60, name: "ANUJAY DIXIT", group: "R-3", bio: "Student in R-3 group." },
+  { id: 61, name: "AMAN DWIVEDI", group: "R-3", bio: "Student in R-3 group." },
+  { id: 62, name: "MANAS KHANDELWAL", group: "R-3", bio: "Student in R-3 group." },
+  { id: 63, name: "SUHANI", group: "R-3", bio: "Student in R-3 group." },
+  { id: 64, name: "ASHISH SINGH", group: "R-3", bio: "Student in R-3 group." },
+  { id: 65, name: "PRALABH PUSHKER", group: "R-3", bio: "Student in R-3 group." },
+  { id: 66, name: "RAGHAV", group: "R-3", bio: "Student in R-3 group." },
+  { id: 67, name: "AYUSH JINDAL", group: "R-3", bio: "Student in R-3 group." },
+  { id: 68, name: "RHYTHM ARORA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 69, name: "MANVENDRA SINGH RATHORE", group: "R-3", bio: "Student in R-3 group." },
+  { id: 70, name: "ADIT GUPTA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 71, name: "RITISHA BISHT", group: "R-3", bio: "Student in R-3 group." },
+  { id: 72, name: "AVNA BATRA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 73, name: "SAURISH SETH", group: "R-3", bio: "Student in R-3 group." },
+  { id: 74, name: "HARSH SHARMA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 75, name: "AMITESH RANJAN", group: "R-3", bio: "Student in R-3 group." },
+  { id: 76, name: "KRISH CHOPRA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 77, name: "ARADHYA SHARMA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 78, name: "SEERAT TALWAR", group: "R-3", bio: "Student in R-3 group." },
+  { id: 79, name: "NAMAN GUPTA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 80, name: "AARAV GUPTA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 81, name: "RAGINI AGGARWAL", group: "R-3", bio: "Student in R-3 group." },
+  { id: 82, name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group." }
+]
 
 export async function GET(request: NextRequest) {
   try {
-    console.log('Fetching students...')
+    console.log('Fetching students from static data...')
     
-    // Test database connection with $queryRaw (safer for SELECT)
-    try {
-      await prisma.$queryRaw`SELECT 1`
-      console.log('Database connection successful')
-    } catch (dbError) {
-      console.error('Database connection failed:', dbError)
-      return NextResponse.json(
-        { error: 'Database connection failed', details: dbError instanceof Error ? dbError.message : 'Unknown error' },
-        { status: 500 }
-      )
-    }
-
-    // Check if students exist
-    const studentCount = await prisma.student.count()
-    console.log(`Found ${studentCount} students in database`)
-    
-    // If no students, create them using bulk insert (serverless-friendly)
-    if (studentCount === 0) {
-      console.log('No students found, creating sample data...')
-      
-      const studentsData = [
-        { name: "DISHITA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "YASH GUPTA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "AMRIT RAJ YADAV", group: "R-1", bio: "Student in R-1 group." },
-        { name: "SAKSHAM SHREYANSH", group: "R-1", bio: "Student in R-1 group." },
-        { name: "JAGRATT VARSHNEY", group: "R-1", bio: "Student in R-1 group." },
-        { name: "AAGAM JAIN", group: "R-1", bio: "Student in R-1 group." },
-        { name: "MAYANK JAIN", group: "R-1", bio: "Student in R-1 group." },
-        { name: "RISHAB BANSAL", group: "R-1", bio: "Student in R-1 group." },
-        { name: "VEER PRATAP SINGH", group: "R-1", bio: "Student in R-1 group." },
-        { name: "VISHESH GARG", group: "R-1", bio: "Student in R-1 group." },
-        { name: "BHARAT KUMAR", group: "R-1", bio: "Student in R-1 group." },
-        { name: "VARUN SINGH RAWAT", group: "R-1", bio: "Student in R-1 group." },
-        { name: "PRABHJOT SINGH", group: "R-1", bio: "Student in R-1 group." },
-        { name: "YASH MITTAL", group: "R-1", bio: "Student in R-1 group." },
-        { name: "SAMARTH CHAUDHARY", group: "R-1", bio: "Student in R-1 group." },
-        { name: "SUBHRADITYA GHOSH", group: "R-1", bio: "Student in R-1 group." },
-        { name: "KARTIK SHARMA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "VARDHMAAN JAIN", group: "R-1", bio: "Student in R-1 group." },
-        { name: "AKRITI SHUKLA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "KARTIK TIWARI", group: "R-1", bio: "Student in R-1 group." },
-        { name: "PRATYUSH SINGH", group: "R-1", bio: "Student in R-1 group." },
-        { name: "AASTHA GARG", group: "R-1", bio: "Student in R-1 group." },
-        { name: "PARTH DHAMI", group: "R-1", bio: "Student in R-1 group." },
-        { name: "DHRUV GUPTA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "NAVYA GUPTA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "DIVISHA ARORA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "MANNAT WADHWA", group: "R-1", bio: "Student in R-1 group." },
-        { name: "ARYAN SINGHAL", group: "R-2", bio: "Student in R-2 group." },
-        { name: "ROSHAN CHOUDHARY", group: "R-2", bio: "Student in R-2 group." },
-        { name: "GARVIT", group: "R-2", bio: "Student in R-2 group." },
-        { name: "AKSHAJ JAIN", group: "R-2", bio: "Student in R-2 group." },
-        { name: "HARNIT GAUTAM", group: "R-2", bio: "Student in R-2 group." },
-        { name: "SAKSHAM MANOCHA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "PRAKHAR SRIVASTAVA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "AGRIM SINGHAL", group: "R-2", bio: "Student in R-2 group." },
-        { name: "NAMIT LAKHCHOWRA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "RAGHAV SHARMA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "KHUSHI GUPTA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "ASIF MIRZA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "PARTH GUPTA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "AJITESH NIGAM", group: "R-2", bio: "Student in R-2 group." },
-        { name: "TANMAY GARG", group: "R-2", bio: "Student in R-2 group." },
-        { name: "AMAN POKHARIA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "HEMANT KUMAR JHA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "SAMBHAV JAIN", group: "R-2", bio: "Student in R-2 group." },
-        { name: "ROHIN SAXENA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "YASH SALHOTRA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "SHUBHRA SINGH", group: "R-2", bio: "Student in R-2 group." },
-        { name: "JAHANVI KUKREJA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "HARSHITA JAIN", group: "R-2", bio: "Student in R-2 group." },
-        { name: "DIYA MANN", group: "R-2", bio: "Student in R-2 group." },
-        { name: "SHIVAM AGGARWAL", group: "R-2", bio: "Student in R-2 group." },
-        { name: "RIDDHIKA SACHDEVA", group: "R-2", bio: "Student in R-2 group." },
-        { name: "DEEPANSHU AGGARWAL", group: "R-2", bio: "Student in R-2 group." },
-        { name: "GARIMA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "KRISHNA NEGI", group: "R-3", bio: "Student in R-3 group." },
-        { name: "VANSHIKA JOSHI", group: "R-3", bio: "Student in R-3 group." },
-        { name: "KAVYA SINGHAL", group: "R-3", bio: "Student in R-3 group." },
-        { name: "AYUSH KUMAR JHA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "ANUJAY DIXIT", group: "R-3", bio: "Student in R-3 group." },
-        { name: "AMAN DWIVEDI", group: "R-3", bio: "Student in R-3 group." },
-        { name: "MANAS KHANDELWAL", group: "R-3", bio: "Student in R-3 group." },
-        { name: "SUHANI", group: "R-3", bio: "Student in R-3 group." },
-        { name: "ASHISH SINGH", group: "R-3", bio: "Student in R-3 group." },
-        { name: "PRALABH PUSHKER", group: "R-3", bio: "Student in R-3 group." },
-        { name: "RAGHAV", group: "R-3", bio: "Student in R-3 group." },
-        { name: "AYUSH JINDAL", group: "R-3", bio: "Student in R-3 group." },
-        { name: "RHYTHM ARORA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "MANVENDRA SINGH RATHORE", group: "R-3", bio: "Student in R-3 group." },
-        { name: "ADIT GUPTA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "RITISHA BISHT", group: "R-3", bio: "Student in R-3 group." },
-        { name: "AVNA BATRA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "SAURISH SETH", group: "R-3", bio: "Student in R-3 group." },
-        { name: "HARSH SHARMA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "AMITESH RANJAN", group: "R-3", bio: "Student in R-3 group." },
-        { name: "KRISH CHOPRA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "ARADHYA SHARMA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "SEERAT TALWAR", group: "R-3", bio: "Student in R-3 group." },
-        { name: "NAMAN GUPTA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "AARAV GUPTA", group: "R-3", bio: "Student in R-3 group." },
-        { name: "RAGINI AGGARWAL", group: "R-3", bio: "Student in R-3 group." },
-        { name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group." }
-      ]
-
-      // Use createMany for bulk insert (serverless-friendly)
-      await prisma.student.createMany({
-        data: studentsData,
-        skipDuplicates: true
-      })
-      
-      console.log(`Created ${studentsData.length} students using bulk insert`)
-    }
-
     const { searchParams } = new URL(request.url)
     const group = searchParams.get('group')
     const search = searchParams.get('search')
 
-    const whereClause: Record<string, string | { contains: string; mode: string }> = {}
+    let filteredStudents = studentsData
 
-    if (group) {
-      whereClause.group = group
+    // Filter by group
+    if (group && group !== 'All') {
+      filteredStudents = filteredStudents.filter(student => student.group === group)
     }
 
+    // Filter by search term
     if (search) {
-      whereClause.name = {
-        contains: search,
-        mode: 'insensitive'
-      }
+      filteredStudents = filteredStudents.filter(student => 
+        student.name.toLowerCase().includes(search.toLowerCase())
+      )
     }
 
-    const students = await prisma.student.findMany({
-      where: whereClause,
-      orderBy: [
-        { id: 'asc' }
-      ]
-    })
-
-    console.log(`Returning ${students.length} students`)
-    return NextResponse.json(students)
+    console.log(`Returning ${filteredStudents.length} students`)
+    return NextResponse.json(filteredStudents)
   } catch (error) {
-    console.error('Detailed error:', error)
+    console.error('Error fetching students:', error)
     return NextResponse.json(
       { error: 'Failed to fetch students', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }

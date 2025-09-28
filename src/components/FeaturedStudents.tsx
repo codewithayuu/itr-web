@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Users } from 'lucide-react'
@@ -19,139 +18,164 @@ const getGroupColor = (group: string) => {
     }
 }
 
+// Static student data - no API calls needed!
+const studentsData: Student[] = [
+  { id: 1, name: "DISHITA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 2, name: "YASH GUPTA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 3, name: "AMRIT RAJ YADAV", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 4, name: "SAKSHAM SHREYANSH", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 5, name: "JAGRATT VARSHNEY", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 6, name: "AAGAM JAIN", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 7, name: "MAYANK JAIN", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 8, name: "RISHAB BANSAL", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 9, name: "VEER PRATAP SINGH", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 10, name: "VISHESH GARG", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 11, name: "BHARAT KUMAR", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 12, name: "VARUN SINGH RAWAT", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 13, name: "PRABHJOT SINGH", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 14, name: "YASH MITTAL", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 15, name: "SAMARTH CHAUDHARY", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 16, name: "SUBHRADITYA GHOSH", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 17, name: "KARTIK SHARMA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 18, name: "VARDHMAAN JAIN", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 19, name: "AKRITI SHUKLA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 20, name: "KARTIK TIWARI", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 21, name: "PRATYUSH SINGH", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 22, name: "AASTHA GARG", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 23, name: "PARTH DHAMI", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 24, name: "DHRUV GUPTA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 25, name: "NAVYA GUPTA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 26, name: "DIVISHA ARORA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 27, name: "MANNAT WADHWA", group: "R-1", bio: "Student in R-1 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 28, name: "ARYAN SINGHAL", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 29, name: "ROSHAN CHOUDHARY", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 30, name: "GARVIT", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 31, name: "AKSHAJ JAIN", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 32, name: "HARNIT GAUTAM", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 33, name: "SAKSHAM MANOCHA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 34, name: "PRAKHAR SRIVASTAVA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 35, name: "AGRIM SINGHAL", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 36, name: "NAMIT LAKHCHOWRA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 37, name: "RAGHAV SHARMA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 38, name: "KHUSHI GUPTA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 39, name: "ASIF MIRZA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 40, name: "PARTH GUPTA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 41, name: "AJITESH NIGAM", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 42, name: "TANMAY GARG", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 43, name: "AMAN POKHARIA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 44, name: "HEMANT KUMAR JHA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 45, name: "SAMBHAV JAIN", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 46, name: "ROHIN SAXENA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 47, name: "YASH SALHOTRA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 48, name: "SHUBHRA SINGH", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 49, name: "JAHANVI KUKREJA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 50, name: "HARSHITA JAIN", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 51, name: "DIYA MANN", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 52, name: "SHIVAM AGGARWAL", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 53, name: "RIDDHIKA SACHDEVA", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 54, name: "DEEPANSHU AGGARWAL", group: "R-2", bio: "Student in R-2 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 55, name: "GARIMA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 56, name: "KRISHNA NEGI", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 57, name: "VANSHIKA JOSHI", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 58, name: "KAVYA SINGHAL", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 59, name: "AYUSH KUMAR JHA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 60, name: "ANUJAY DIXIT", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 61, name: "AMAN DWIVEDI", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 62, name: "MANAS KHANDELWAL", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 63, name: "SUHANI", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 64, name: "ASHISH SINGH", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 65, name: "PRALABH PUSHKER", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 66, name: "RAGHAV", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 67, name: "AYUSH JINDAL", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 68, name: "RHYTHM ARORA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 69, name: "MANVENDRA SINGH RATHORE", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 70, name: "ADIT GUPTA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 71, name: "RITISHA BISHT", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 72, name: "AVNA BATRA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 73, name: "SAURISH SETH", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 74, name: "HARSH SHARMA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 75, name: "AMITESH RANJAN", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 76, name: "KRISH CHOPRA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 77, name: "ARADHYA SHARMA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 78, name: "SEERAT TALWAR", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 79, name: "NAMAN GUPTA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 80, name: "AARAV GUPTA", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 81, name: "RAGINI AGGARWAL", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() },
+  { id: 82, name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group.", createdAt: new Date(), updatedAt: new Date() }
+]
+
 export function FeaturedStudents() {
-    const [students, setStudents] = useState<Student[]>([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        const fetchStudents = async () => {
-            try {
-                const response = await fetch('/api/students')
-                if (response.ok) {
-                    const data = await response.json()
-                    
-                    
-                    // Sort students by the defined order and take first 6
-                    const sortedStudents = data.sort((a: Student, b: Student) => {
-                        // Create unique identifiers by combining name and group
-                        const identifierA = `${a.name}-${a.group}`
-                        const identifierB = `${b.name}-${b.group}`
-                        
-                        // Define the exact order with name-group combinations
-                        const studentOrderWithGroups = [
-                            "DISHITA-R-1", "YASH GUPTA-R-1", "AMRIT RAJ YADAV-R-1", "SAKSHAM SHREYANSH-R-1", "JAGRATT VARSHNEY-R-1",
-                            "AAGAM JAIN-R-1", "MAYANK JAIN-R-1", "RISHAB BANSAL-R-1", "VEER PRATAP SINGH-R-1", "VISHESH GARG-R-1",
-                            "BHARAT KUMAR-R-1", "VARUN SINGH RAWAT-R-1", "PRABHJOT SINGH-R-1", "YASH MITTAL-R-1", "SAMARTH CHAUDHARY-R-1",
-                            "SUBHRADITYA GHOSH-R-1", "KARTIK SHARMA-R-1", "VARDHMAAN JAIN-R-1", "AKRITI SHUKLA-R-1", "KARTIK TIWARI-R-1",
-                            "PRATYUSH SINGH-R-1", "AASTHA GARG-R-1", "PARTH DHAMI-R-1", "DHRUV GUPTA-R-1", "NAVYA GUPTA-R-1",
-                            "DIVISHA ARORA-R-1", "MANNAT WADHWA-R-1", "ARYAN SINGHAL-R-2", "ROSHAN CHOUDHARY-R-2", "GARVIT-R-2",
-                            "AKSHAJ JAIN-R-2", "HARNIT GAUTAM-R-2", "SAKSHAM MANOCHA-R-2", "PRAKHAR SRIVASTAVA-R-2", "AGRIM SINGHAL-R-2",
-                            "NAMIT LAKHCHOWRA-R-2", "RAGHAV SHARMA-R-2", "KHUSHI GUPTA-R-2", "ASIF MIRZA-R-2", "PARTH GUPTA-R-2",
-                            "AJITESH NIGAM-R-2", "TANMAY GARG-R-2", "AMAN POKHARIA-R-2", "HEMANT KUMAR JHA-R-2", "SAMBHAV JAIN-R-2",
-                            "ROHIN SAXENA-R-2", "YASH SALHOTRA-R-2", "SHUBHRA SINGH-R-2", "JAHANVI KUKREJA-R-2", "HARSHITA JAIN-R-2",
-                            "DIYA MANN-R-2", "SHIVAM AGGARWAL-R-2", "RIDDHIKA SACHDEVA-R-2", "DEEPANSHU AGGARWAL-R-2", "GARIMA-R-3",
-                            "KRISHNA NEGI-R-3", "VANSHIKA JOSHI-R-3", "KAVYA SINGHAL-R-3", "AYUSH KUMAR JHA-R-3", "ANUJAY DIXIT-R-3",
-                            "AMAN DWIVEDI-R-3", "MANAS KHANDELWAL-R-3", "SUHANI-R-3", "ASHISH SINGH-R-3", "PRALABH PUSHKER-R-3",
-                            "RAGHAV-R-3", "AYUSH JINDAL-R-3", "RHYTHM ARORA-R-3", "MANVENDRA SINGH RATHORE-R-3", "ADIT GUPTA-R-3",
-                            "RITISHA BISHT-R-3", "AVNA BATRA-R-3", "SAURISH SETH-R-3", "HARSH SHARMA-R-3", "AMITESH RANJAN-R-3",
-                            "KRISH CHOPRA-R-3", "ARADHYA SHARMA-R-3", "SEERAT TALWAR-R-3", "NAMAN GUPTA-R-3", "AARAV GUPTA-R-3",
-                            "RAGINI AGGARWAL-R-3", "MAYANK JAIN-R-3"
-                        ]
-                        
-                        const indexA = studentOrderWithGroups.indexOf(identifierA)
-                        const indexB = studentOrderWithGroups.indexOf(identifierB)
-                        return indexA - indexB
-                    })
-                    
-                    setStudents(sortedStudents.slice(0, 6))
-                }
-            } catch (error) {
-                console.error('Error fetching students:', error)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchStudents()
-    }, [])
-
-    if (loading) {
-        return (
-            <section className="section-padding relative z-20">
-                <div className="container-custom">
-                    <div className="text-center py-12">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                        <p className="text-gray-300">Loading students...</p>
-                    </div>
-                </div>
-            </section>
-        )
-    }
+    // Show first 6 students - no API calls needed!
+    const students = studentsData.slice(0, 6)
 
     return (
-        <section className="section-padding relative z-20">
-            <div className="container-custom">
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-flex items-center gap-2 bg-blue-600/10 text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-4"
+                    >
+                        <Users className="w-4 h-4" />
+                        Our Students
+                    </motion.div>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                        className="text-3xl font-bold text-white sm:text-4xl mb-4"
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="text-3xl sm:text-4xl font-bold text-white mb-4"
                     >
-                        Meet Our Talented Students
+                        Meet Our Amazing Students
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        viewport={{ once: true }}
-                        className="text-lg text-gray-300"
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="text-gray-400 text-lg max-w-2xl mx-auto"
                     >
-                        Discover the bright minds and future leaders of IT-R
+                        Discover the talented individuals who make up our IT-R community
                     </motion.p>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     {students.map((student, index) => (
                         <motion.div
                             key={student.id}
                             initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -5, scale: 1.02 }}
-                            className="group relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gray-800/30 backdrop-blur-sm p-6 shadow-xl hover:shadow-2xl transition-all duration-300 card-hover"
+                            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
                         >
-                            <div className="flex flex-col items-center text-center space-y-4">
-                                <div className="h-20 w-20 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
                                     {student.name.charAt(0)}
                                 </div>
-
-                                <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-medium border ${getGroupColor(student.group)}`}>
-                                    {student.group}
-                                </span>
-
-                                <h3 className="text-lg font-semibold text-white">{student.name}</h3>
+                                <div>
+                                    <h3 className="text-white font-semibold text-lg">{student.name}</h3>
+                                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getGroupColor(student.group)}`}>
+                                        {student.group}
+                                    </span>
+                                </div>
                             </div>
+                            <p className="text-gray-400 text-sm">{student.bio}</p>
                         </motion.div>
                     ))}
                 </div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    viewport={{ once: true }}
-                    className="mt-12 text-center"
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    className="text-center"
                 >
                     <Link
                         href="/students"
-                        className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-300"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
                     >
-                        <Users className="mr-2 h-4 w-4" />
                         View All Students
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="w-4 h-4" />
                     </Link>
                 </motion.div>
             </div>
