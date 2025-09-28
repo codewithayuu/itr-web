@@ -101,7 +101,9 @@ const studentsData = [
   { id: 79, name: "NAMAN GUPTA", group: "R-3", bio: "Student in R-3 group." },
   { id: 80, name: "AARAV GUPTA", group: "R-3", bio: "Student in R-3 group." },
   { id: 81, name: "RAGINI AGGARWAL", group: "R-3", bio: "Student in R-3 group." },
-  { id: 82, name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group." }
+  { id: 82, name: "MAYANK JAIN", group: "R-3", bio: "Student in R-3 group." },
+  { id: 83, name: "SHIVANK", group: "R-3", bio: "Student in R-3 group." },
+  { id: 84, name: "GYAN WARDHAN", group: "R-3", bio: "Student in R-3 group." }
 ]
 
 export function Students() {

@@ -43,6 +43,16 @@ export function SiteFooter() {
                                     Our Faculty
                                 </Link>
                             </li>
+                            <li>
+                                <a 
+                                    href="https://amrit-11022007.github.io/" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-gray-300 hover:text-blue-400 transition-colors"
+                                >
+                                    Study Material
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
