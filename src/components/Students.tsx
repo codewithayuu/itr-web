@@ -91,7 +91,7 @@ const studentsData = [
   { id: 69, name: "MANVENDRA SINGH RATHORE", group: "R-3", bio: "Student in R-3 group." },
   { id: 70, name: "ADIT GUPTA", group: "R-3", bio: "Student in R-3 group." },
   { id: 71, name: "RITISHA BISHT", group: "R-3", bio: "Student in R-3 group." },
-  { id: 72, name: "AVNA BATRA", group: "R-3", bio: "Student in R-3 group." },
+  { id: 72, name: "abha batra", group: "R-3", bio: "Student in R-3 group." },
   { id: 73, name: "SAURISH SETH", group: "R-3", bio: "Student in R-3 group." },
   { id: 74, name: "HARSH SHARMA", group: "R-3", bio: "Student in R-3 group." },
   { id: 75, name: "AMITESH RANJAN", group: "R-3", bio: "Student in R-3 group." },
